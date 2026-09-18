@@ -100,7 +100,7 @@ $usuario_actual = current_user();
         <!-- Nav Bar Start -->
         <div class="nav-bar">
             <div class="container">
-                <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+                <nav class="navbar navbar-expand-xl bg-dark navbar-dark">
                     <a href="index.php" class="navbar-brand">Menú</a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
