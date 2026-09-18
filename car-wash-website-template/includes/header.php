@@ -150,11 +150,11 @@ $usuario_actual = current_user();
                                     </div>
                                 </div>
                                 <?php if ($usuario_actual['rol'] === 'cliente'): ?>
-                                    <a class="btn btn-custom ml-lg-3" href="price.php">Ver planes</a>
+                                    <a class="btn btn-custom" href="price.php">Ver planes</a>
                                 <?php endif; ?>
                             <?php else: ?>
                                 <a href="login.php" class="nav-item nav-link<?= nav_active('login', $active_page) ?>">Iniciar sesión</a>
-                                <a class="btn btn-custom ml-lg-2" href="registro.php">Registrarse</a>
+                                <a class="btn btn-custom" href="registro.php">Registrarse</a>
                             <?php endif; ?>
                         </div>
                     </div>

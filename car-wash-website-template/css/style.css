@@ -297,13 +297,40 @@ a:focus {
     .navbar-dark .navbar-nav .nav-link.active {
         padding: 5px 0;
     }
-    
+
     .nav-bar .dropdown-menu {
         box-shadow: none;
     }
-    
+
     .nav-bar .btn {
         display: none;
+    }
+}
+
+/* Iniciar sesión / Hola, {nombre} viven fuera de .navbar-nav (para poder
+   alinearse a la derecha), así que no heredan el color blanco del resto del
+   menú y quedaban invisibles: texto azul oscuro sobre fondo azul oscuro. */
+.navbar-auth {
+    gap: 15px;
+}
+
+.navbar-auth .nav-link,
+.navbar-auth .nav-link:focus {
+    color: #ffffff;
+    padding: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.navbar-auth .nav-link:hover,
+.navbar-auth .nav-link.active {
+    color: #E81C2E;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-auth .nav-link,
+    .navbar-auth .nav-link:focus {
+        padding: 5px 0;
     }
 }
 
