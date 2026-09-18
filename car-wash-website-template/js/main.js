@@ -125,6 +125,34 @@
             }
         }
     });
-    
+
+
+    // Revelado de secciones al hacer scroll, usando animate.css (ya cargado
+    // en el sitio) en vez de sumar una librería nueva. Sin IntersectionObserver
+    // (navegadores muy antiguos) todo queda visible de inmediato.
+    var revealSelector = '.section-header, .service-item, .price-item, ' +
+        '.punto-card, .team-item, .testimonial-item, .blog-item, .facts-item';
+    var revealTargets = document.querySelectorAll(revealSelector);
+
+    if ('IntersectionObserver' in window && revealTargets.length) {
+        revealTargets.forEach(function (el) {
+            el.classList.add('reveal');
+        });
+
+        var revealObserver = new IntersectionObserver(function (entries, obs) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('reveal');
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealTargets.forEach(function (el) {
+            revealObserver.observe(el);
+        });
+    }
+
 })(jQuery);
 

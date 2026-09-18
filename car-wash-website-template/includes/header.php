@@ -27,7 +27,7 @@ $usuario_actual = current_user();
         <meta content="AutoLink+: planes de lavado y mantenimiento para tu carro o moto en Rionegro, Antioquia" name="description">
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="img/favicon.svg" rel="icon" type="image/svg+xml">
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">

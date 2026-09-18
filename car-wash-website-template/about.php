@@ -31,7 +31,7 @@ include __DIR__ . '/includes/header.php';
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="about-img">
-                            <img src="img/lavadero.jpg" alt="Image">
+                            <img src="img/lavadero.jpg" alt="Lavado profesional de vehículos">
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -60,7 +60,7 @@ include __DIR__ . '/includes/header.php';
         
         
         <!-- Facts Start -->
-<div class="facts" data-parallax="scroll" data-image-src="img/facts.jpg">
+<div class="facts">
     <div class="container">
         <div class="row">
 

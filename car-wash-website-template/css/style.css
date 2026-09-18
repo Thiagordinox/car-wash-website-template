@@ -2054,3 +2054,47 @@ a:focus {
 .footer .copyright p a:hover {
     color: #ffffff;
 }
+
+
+/**********************************/
+/****** Tarjetas y animaciones ****/
+/**********************************/
+
+/* Elevación suave al pasar el cursor sobre tarjetas de servicios y planes */
+.service .service-item,
+.price .price-item {
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.service .service-item:hover {
+    transform: translateY(-8px);
+}
+
+.price .price-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .12);
+}
+
+/* Tarjetas de talleres y lavaderos (lavaderos.php / talleres.php) */
+.punto-card {
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .05);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.punto-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .12);
+}
+
+.punto-card iframe {
+    display: block;
+}
+
+/* Revelado suave de secciones al hacer scroll (activado desde js/main.js) */
+.reveal {
+    visibility: hidden;
+}

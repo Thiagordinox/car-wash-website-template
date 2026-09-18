@@ -178,7 +178,7 @@ include __DIR__ . '/includes/header.php';
         
         
         <!-- Facts Start -->
-<div class="facts" data-parallax="scroll" data-image-src="img/facts.jpg">
+<div class="facts">
     <div class="container">
         <div class="row">
 

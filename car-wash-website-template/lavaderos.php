@@ -35,7 +35,7 @@ include __DIR__ . '/includes/header.php';
         <div class="row">
             <?php foreach ($lavaderos as $lavadero): ?>
                 <div class="col-lg-6 mb-4">
-                    <div class="border rounded p-3 h-100">
+                    <div class="punto-card h-100">
                         <div class="location-item">
                             <i class="fa fa-map-marker-alt"></i>
                             <div class="location-text">
