@@ -25,10 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($usuario['password_hash']);
             login_user($usuario);
 
-            $redirect = (string) ($_POST['redirect'] ?? '');
-            if (!preg_match('#^[a-zA-Z0-9_\-]+\.php(\?[a-zA-Z0-9_\-=&%.]*)?$#', $redirect)) {
-                $redirect = 'panel.php';
-            }
+            $redirectPost = (string) ($_POST['redirect'] ?? '');
+            $redirect = preg_match('#^[a-zA-Z0-9_\-]+\.php(\?[a-zA-Z0-9_\-=&%.]*)?$#', $redirectPost)
+                ? $redirectPost
+                : panel_por_rol($usuario['rol']);
             header('Location: ' . $redirect);
             exit;
         }

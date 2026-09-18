@@ -43,10 +43,24 @@ function require_login(): void
     }
 }
 
+/**
+ * Panel de inicio de cada rol, usado cuando no hay una página protegida
+ * específica a la que volver (login.php y las guardas de abajo).
+ */
+function panel_por_rol(string $rol): string
+{
+    return match ($rol) {
+        'admin' => 'admin-reservas.php',
+        'personal' => 'personal-panel.php',
+        default => 'panel.php',
+    };
+}
+
 function require_guest(): void
 {
-    if (is_logged_in()) {
-        header('Location: panel.php');
+    $usuario = current_user();
+    if ($usuario !== null) {
+        header('Location: ' . panel_por_rol($usuario['rol']));
         exit;
     }
 }
@@ -55,7 +69,7 @@ function require_admin(): void
 {
     require_login();
     if (current_user()['rol'] !== 'admin') {
-        header('Location: panel.php');
+        header('Location: ' . panel_por_rol(current_user()['rol']));
         exit;
     }
 }
@@ -93,7 +107,11 @@ function require_personal(): void
 {
     require_login();
     if (current_personal() === null) {
-        header('Location: panel.php');
+        // Si el rol es 'personal' pero no hay personal.activo=1, mandarlo a
+        // panel_por_rol() volvería a este mismo portal y crearía un bucle
+        // de redirecciones; una cuenta desactivada cae a la página de inicio.
+        $rol = current_user()['rol'];
+        header('Location: ' . ($rol === 'personal' ? 'index.php' : panel_por_rol($rol)));
         exit;
     }
 }

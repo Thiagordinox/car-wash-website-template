@@ -187,3 +187,12 @@ JOIN (
     UNION ALL SELECT 'laura.personal@autolink.test', 'Lavadero La Estación', 'Operaria de lavado'
 ) asignacion ON asignacion.correo = u.correo
 JOIN puntos p ON p.nombre = asignacion.punto;
+
+-- feature/panel-administrador -------------------------------------------
+-- Cuenta de administrador de prueba (contraseña de desarrollo: "Admin123!").
+-- Es la única forma de crear más cuentas admin o de personal: no existe (ni
+-- debe existir) un formulario público para eso, a diferencia de
+-- registro.php que siempre crea rol='cliente'. Borra o cambia esta cuenta
+-- antes de cualquier uso real del sitio.
+INSERT IGNORE INTO usuarios (nombre, correo, password_hash, rol) VALUES
+    ('Administrador AutoLink+', 'admin@autolink.test', '$2y$10$.dwRAN5pB.fc5N/RuRIz5.3cWhq3lUh52ABGpNQjPRvh26a4Y5OnS', 'admin');

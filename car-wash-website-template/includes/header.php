@@ -135,15 +135,23 @@ $usuario_actual = current_user();
                                         Hola, <?= htmlspecialchars(explode(' ', $usuario_actual['nombre'])[0]) ?>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="panel.php" class="dropdown-item">Mi panel</a>
-                                        <?php if ($usuario_actual['rol'] === 'cliente'): ?>
+                                        <?php if ($usuario_actual['rol'] === 'admin'): ?>
+                                            <a href="admin-reservas.php" class="dropdown-item">Reservas</a>
+                                            <a href="admin-personal.php" class="dropdown-item">Personal</a>
+                                            <a href="admin-finanzas.php" class="dropdown-item">Finanzas</a>
+                                        <?php elseif ($usuario_actual['rol'] === 'personal'): ?>
+                                            <a href="personal-panel.php" class="dropdown-item">Mis citas asignadas</a>
+                                        <?php else: ?>
+                                            <a href="panel.php" class="dropdown-item">Mi panel</a>
                                             <a href="agendar.php" class="dropdown-item">Agendar cita</a>
                                         <?php endif; ?>
                                         <a href="perfil.php" class="dropdown-item">Mi perfil</a>
                                         <a href="logout.php" class="dropdown-item">Cerrar sesión</a>
                                     </div>
                                 </div>
-                                <a class="btn btn-custom ml-lg-3" href="price.php">Ver planes</a>
+                                <?php if ($usuario_actual['rol'] === 'cliente'): ?>
+                                    <a class="btn btn-custom ml-lg-3" href="price.php">Ver planes</a>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <a href="login.php" class="nav-item nav-link<?= nav_active('login', $active_page) ?>">Iniciar sesión</a>
                                 <a class="btn btn-custom ml-lg-2" href="registro.php">Registrarse</a>
