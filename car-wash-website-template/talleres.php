@@ -2,6 +2,9 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/includes/auth.php';
+require_once __DIR__ . '/includes/puntos.php';
+
+$talleres = listar_puntos('taller');
 
 $active_page = 'talleres';
 $page_title = 'Talleres - AutoLink+';
@@ -25,154 +28,44 @@ include __DIR__ . '/includes/header.php';
         <!-- Page Header End -->
         
         
-        <!-- Team Start -->
-        <div class="team">
+        <!-- Talleres Start -->
+        <div class="location">
             <div class="container">
                 <div class="section-header text-center">
-                    <p>Meet Our Team</p>
-                    <h2>Our Engineers & Workers</h2>
+                    <p>Talleres aliados</p>
+                    <h2>Mantenimiento y reparación para tu vehículo o moto</h2>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-1.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Donald John</h2>
-                                <p>Engineer</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
+                    <?php foreach ($talleres as $taller): ?>
+                        <div class="col-lg-6 mb-4">
+                            <div class="border rounded p-3 h-100">
+                                <div class="location-item">
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <div class="location-text">
+                                        <h3><?= htmlspecialchars($taller['nombre']) ?></h3>
+                                        <p><?= htmlspecialchars($taller['direccion']) ?></p>
+                                        <p><strong>Tel:</strong> <?= htmlspecialchars($taller['telefono']) ?></p>
+                                        <?php if ($taller['descripcion']): ?>
+                                            <p><?= htmlspecialchars($taller['descripcion']) ?></p>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
+                                <iframe
+                                    src="<?= htmlspecialchars(mapa_embed_url_de($taller)) ?>"
+                                    width="100%"
+                                    height="220"
+                                    style="border:0; border-radius: 10px;"
+                                    allowfullscreen=""
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-2.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Adam Phillips</h2>
-                                <p>Engineer</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-3.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Thomas Olsen</h2>
-                                <p>Worker</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-4.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>James Alien</h2>
-                                <p>Worker</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-1.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Donald John</h2>
-                                <p>Engineer</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-2.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Adam Phillips</h2>
-                                <p>Engineer</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-3.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>Thomas Olsen</h2>
-                                <p>Worker</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-item">
-                            <div class="team-img">
-                                <img src="img/team-4.jpg" alt="Team Image">
-                            </div>
-                            <div class="team-text">
-                                <h2>James Alien</h2>
-                                <p>Worker</p>
-                                <div class="team-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
-        <!-- Team End -->
+        <!-- Talleres End -->
 
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

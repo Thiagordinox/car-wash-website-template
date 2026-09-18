@@ -83,3 +83,32 @@ CREATE TABLE IF NOT EXISTS pedidos (
     FOREIGN KEY (id_plan) REFERENCES planes(id_plan),
     INDEX idx_pedidos_usuario (id_usuario)
 ) ENGINE=InnoDB;
+
+-- feature/mapas-talleres -----------------------------------------------------
+-- Un solo catálogo para talleres y lavaderos (misma forma de datos). El mapa
+-- de cada punto se genera en PHP a partir de "direccion" con el embed público
+-- de Google Maps que no requiere clave de API (?q=...&output=embed); la
+-- columna mapa_embed_url solo existe por si algún punto necesita a futuro una
+-- URL de mapa hecha a mano en vez de la generada automáticamente.
+
+CREATE TABLE IF NOT EXISTS puntos (
+    id_punto       INT AUTO_INCREMENT PRIMARY KEY,
+    tipo           ENUM('taller', 'lavadero') NOT NULL,
+    nombre         VARCHAR(100) NOT NULL,
+    direccion      VARCHAR(200) NOT NULL,
+    telefono       VARCHAR(20) NOT NULL,
+    descripcion    VARCHAR(200) NULL,
+    mapa_embed_url VARCHAR(500) NULL,
+    orden          INT NOT NULL DEFAULT 0,
+    activo         TINYINT(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB;
+
+INSERT IGNORE INTO puntos (tipo, nombre, direccion, telefono, descripcion, orden) VALUES
+    ('lavadero', 'Autolavado El Progreso', 'Calle 48 #54-20, Rionegro, Antioquia', '+57 604 561 2345', 'Lavado exterior e interior para carro y moto.', 1),
+    ('lavadero', 'Lavadero La Estación', 'Carrera 55 #48-15, Sector El Porvenir, Rionegro, Antioquia', '+57 310 456 7890', 'Lavado rápido y detallado, con zona de espera.', 2),
+    ('lavadero', 'EcoWash Rionegro', 'Vía Llanogrande, frente al Mall Complex Llanogrande, Rionegro, Antioquia', '+57 314 789 6543', 'Lavado ecológico de bajo consumo de agua.', 3),
+    ('lavadero', 'Lavadero Motocar', 'Carrera 46 #46-05, Sector El Tablazo, Rionegro, Antioquia', '+57 301 234 5678', 'Especialistas en lavado y encerado de motos.', 4),
+    ('taller', 'Rionegro Motors', 'Calle 50 #52-30, Rionegro, Antioquia', '+57 604 532 1010', 'Mecánica general y mantenimiento preventivo para carro y camioneta.', 1),
+    ('taller', 'MotoExpress Taller', 'Carrera 48 #45-10, Sector Belén, Rionegro, Antioquia', '+57 312 678 4321', 'Taller especializado en motos: frenos, cadena y motor.', 2),
+    ('taller', 'Taller El Porvenir Diésel y Gasolina', 'Vía Aeropuerto José María Córdova, Rionegro, Antioquia', '+57 604 545 6767', 'Diagnóstico electrónico y motores diésel y a gasolina.', 3),
+    ('taller', 'Suspensión y Frenos Llanogrande', 'Carrera 50 #40-22, Llanogrande, Rionegro, Antioquia', '+57 317 890 1234', 'Alineación, balanceo, suspensión y sistema de frenos.', 4);
