@@ -231,6 +231,18 @@ a:focus {
     background: #202C45;
 }
 
+/* El .container de Bootstrap se queda fijo en 1140px desde 1200px de
+   ancho en adelante, sin importar qué tan ancha sea la ventana. Con 7
+   enlaces/menús más "Hola, {nombre}" y el botón, un nombre de usuario
+   largo (una sola palabra, ej. "PEPEGANGA") puede no caber en esos
+   1140px y se cae a una segunda línea aunque la pantalla sea enorme.
+   Se amplía solo el contenedor de esta barra para dar más aire. */
+@media (min-width: 1200px) {
+    .nav-bar .container {
+        max-width: 1300px;
+    }
+}
+
 .nav-bar.nav-sticky {
     position: fixed;
     width: 100%;
