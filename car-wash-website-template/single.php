@@ -1,121 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <title>AutoLink - Profesionalismo en el lavado de carros y motos</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Plantilla Web Gratis" name="keywords">
-        <meta content="Plantilla Web Gratis" name="description">
+<?php
+declare(strict_types=1);
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+require_once __DIR__ . '/includes/auth.php';
 
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"> 
-        
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-
-    <body>
-        <!-- Barra Superior Inicio -->
-        <div class="top-bar">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="logo">
-                            <a href="index.html">
-                                <h1>Auto<span>Link</span></h1>
-                                <!-- <img src="img/logo.jpg" alt="Logo"> -->
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="far fa-clock"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Horario</h3>
-                                        <p>Lun - Vie, 8:00 - 19:00</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="fa fa-phone-alt"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Contáctanos</h3>
-                                        <p>+012 345 6789</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="far fa-envelope"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Correo</h3>
-                                        <p>info@autolink.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Barra Superior Fin -->
-
-        <!-- Barra de Navegación Inicio -->
-        <div class="nav-bar">
-            <div class="container">
-                <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-                    <a href="#" class="navbar-brand">MENÚ</a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto">
-                            <a href="index.html" class="nav-item nav-link">Inicio</a>
-                            <a href="about.html" class="nav-item nav-link">Acerca de</a>
-                            <a href="service.html" class="nav-item nav-link">Servicios</a>
-                            <a href="price.html" class="nav-item nav-link">Precios</a>
-                            <a href="location.html" class="nav-item nav-link">Puntos de lavado</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Páginas</a>
-                                <div class="dropdown-menu">
-                                    <a href="blog.html" class="dropdown-item">Tips de cuidado de carros y motos</a>
-                                    <a href="single.html" class="dropdown-item">Detalle</a>
-                                    <a href="team.html" class="dropdown-item">Talleres</a>
-                                    <a href="booking.html" class="dropdown-item">Reservar cita</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Contacto</a>
-                        </div>
-                        <div class="ml-auto">
-                            <a class="btn btn-custom" href="#">Obtener cita</a>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Barra de Navegación Fin -->
-        
-        
+$active_page = 'single';
+$page_title = 'AutoLink+ - Profesionalismo en el lavado de carros y motos';
+include __DIR__ . '/includes/header.php';
+?>
         <!-- Encabezado de Página Inicio -->
         <div class="page-header">
             <div class="container">
@@ -124,8 +15,9 @@
                         <h2>Profesionalismo en el lavado de carros y motos</h2>
                     </div>
                     <div class="col-12">
-                        <a href="index.html">Inicio</a>
-                        <a href="single.html">Detalle</a>
+                        <a href="index.php">Inicio</a>
+                        <span> / </span>
+                        <a href="single.php">Detalle</a>
                     </div>
                 </div>
             </div>
@@ -503,84 +395,4 @@
         <!-- Contenido Detalle Fin-->   
 
 
-        <!-- Pie de Página Inicio -->
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-contact">
-                            <h2>Contáctanos</h2>
-                            <p><i class="fa fa-map-marker-alt"></i>Calle 123, Ciudad, País</p>
-                            <p><i class="fa fa-phone-alt"></i>+012 345 6789</p>
-                            <p><i class="fa fa-envelope"></i>info@autolink.com</p>
-                            <div class="footer-social">
-                                <a class="btn" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn" href=""><i class="fab fa-youtube"></i></a>
-                                <a class="btn" href=""><i class="fab fa-instagram"></i></a>
-                                <a class="btn" href=""><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-link">
-                            <h2>Enlaces populares</h2>
-                            <a href="about.html">Acerca de</a>
-                            <a href="contact.html">Contacto</a>
-                            <a href="service.html">Servicios</a>
-                            <a href="location.html">Puntos de lavado</a>
-                            <a href="price.html">Precios</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-link">
-                            <h2>Enlaces útiles</h2>
-                            <a href="">Términos de uso</a>
-                            <a href="">Política de privacidad</a>
-                            <a href="">Cookies</a>
-                            <a href="">Ayuda</a>
-                            <a href="">Preguntas frecuentes</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="footer-newsletter">
-                            <h2>Boletín</h2>
-                            <form>
-                                <input class="form-control" placeholder="Nombre completo">
-                                <input class="form-control" placeholder="Correo electrónico">
-                                <button class="btn btn-custom">Suscribirse</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container copyright">
-                <p>&copy; <a href="#">AutoLink</a>, Todos los derechos reservados. Diseñado por <a href="https://htmlcodex.com">HTML Codex</a></p>
-            </div>
-        </div>
-        <!-- Pie de Página Fin -->
-        
-        <!-- Botón volver arriba -->
-        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-        
-        <!-- Pre Loader -->
-        <div id="loader" class="show">
-            <div class="loader"></div>
-        </div>
-
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/counterup/counterup.min.js"></script>
-        
-        <!-- Contact Javascript File -->
-        <script src="mail/jqBootstrapValidation.min.js"></script>
-        <script src="mail/contact.js"></script>
-
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-    </body>
-</html>
+<?php include __DIR__ . '/includes/footer.php'; ?>

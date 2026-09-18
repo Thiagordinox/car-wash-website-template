@@ -216,7 +216,7 @@ a:focus {
     font-weight: 400;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
     .top-bar .logo {
         text-align: center;
     }
@@ -229,6 +229,18 @@ a:focus {
 .nav-bar {
     position: relative;
     background: #202C45;
+}
+
+/* El .container de Bootstrap se queda fijo en 1140px desde 1200px de
+   ancho en adelante, sin importar qué tan ancha sea la ventana. Con 7
+   enlaces/menús más "Hola, {nombre}" y el botón, un nombre de usuario
+   largo (una sola palabra, ej. "PEPEGANGA") puede no caber en esos
+   1140px y se cae a una segunda línea aunque la pantalla sea enorme.
+   Se amplía solo el contenedor de esta barra para dar más aire. */
+@media (min-width: 1200px) {
+    .nav-bar .container {
+        max-width: 1300px;
+    }
 }
 
 .nav-bar.nav-sticky {
@@ -284,26 +296,53 @@ a:focus {
     box-shadow: inset 200px 0 0 0 #E81C2E;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
     .nav-bar .navbar-brand {
         display: none;
     }
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
     .navbar-dark .navbar-nav .nav-link,
     .navbar-dark .navbar-nav .nav-link:focus,
     .navbar-dark .navbar-nav .nav-link:hover,
     .navbar-dark .navbar-nav .nav-link.active {
         padding: 5px 0;
     }
-    
+
     .nav-bar .dropdown-menu {
         box-shadow: none;
     }
-    
+
     .nav-bar .btn {
         display: none;
+    }
+}
+
+/* Iniciar sesión / Hola, {nombre} viven fuera de .navbar-nav (para poder
+   alinearse a la derecha), así que no heredan el color blanco del resto del
+   menú y quedaban invisibles: texto azul oscuro sobre fondo azul oscuro. */
+.navbar-auth {
+    gap: 15px;
+}
+
+.navbar-auth .nav-link,
+.navbar-auth .nav-link:focus {
+    color: #ffffff;
+    padding: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.navbar-auth .nav-link:hover,
+.navbar-auth .nav-link.active {
+    color: #E81C2E;
+}
+
+@media (max-width: 1199.98px) {
+    .navbar-auth .nav-link,
+    .navbar-auth .nav-link:focus {
+        padding: 5px 0;
     }
 }
 
@@ -2053,4 +2092,48 @@ a:focus {
 
 .footer .copyright p a:hover {
     color: #ffffff;
+}
+
+
+/**********************************/
+/****** Tarjetas y animaciones ****/
+/**********************************/
+
+/* Elevación suave al pasar el cursor sobre tarjetas de servicios y planes */
+.service .service-item,
+.price .price-item {
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.service .service-item:hover {
+    transform: translateY(-8px);
+}
+
+.price .price-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .12);
+}
+
+/* Tarjetas de talleres y lavaderos (lavaderos.php / talleres.php) */
+.punto-card {
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .05);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.punto-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .12);
+}
+
+.punto-card iframe {
+    display: block;
+}
+
+/* Revelado suave de secciones al hacer scroll (activado desde js/main.js) */
+.reveal {
+    visibility: hidden;
 }
