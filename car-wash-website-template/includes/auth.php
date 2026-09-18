@@ -51,6 +51,53 @@ function require_guest(): void
     }
 }
 
+function require_admin(): void
+{
+    require_login();
+    if (current_user()['rol'] !== 'admin') {
+        header('Location: panel.php');
+        exit;
+    }
+}
+
+/**
+ * Un miembro del personal, con sus datos de la tabla "personal" incluidos.
+ * Exige personal.activo = 1: una cuenta desactivada no debe poder entrar al
+ * portal aunque su usuarios.rol siga siendo 'personal'.
+ */
+function current_personal(): ?array
+{
+    static $personal = null;
+    static $loaded = false;
+
+    $usuario = current_user();
+    if ($usuario === null || $usuario['rol'] !== 'personal') {
+        return null;
+    }
+
+    if (!$loaded) {
+        $stmt = db()->prepare(
+            'SELECT id_personal, id_usuario, id_punto, cargo, activo
+             FROM personal
+             WHERE id_usuario = ? AND activo = 1'
+        );
+        $stmt->execute([$usuario['id_usuario']]);
+        $personal = $stmt->fetch() ?: null;
+        $loaded = true;
+    }
+
+    return $personal;
+}
+
+function require_personal(): void
+{
+    require_login();
+    if (current_personal() === null) {
+        header('Location: panel.php');
+        exit;
+    }
+}
+
 function login_user(array $usuario): void
 {
     session_regenerate_id(true);

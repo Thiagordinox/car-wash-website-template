@@ -112,3 +112,78 @@ INSERT IGNORE INTO puntos (tipo, nombre, direccion, telefono, descripcion, orden
     ('taller', 'MotoExpress Taller', 'Carrera 48 #45-10, Sector Belén, Rionegro, Antioquia', '+57 312 678 4321', 'Taller especializado en motos: frenos, cadena y motor.', 2),
     ('taller', 'Taller El Porvenir Diésel y Gasolina', 'Vía Aeropuerto José María Córdova, Rionegro, Antioquia', '+57 604 545 6767', 'Diagnóstico electrónico y motores diésel y a gasolina.', 3),
     ('taller', 'Suspensión y Frenos Llanogrande', 'Carrera 50 #40-22, Llanogrande, Rionegro, Antioquia', '+57 317 890 1234', 'Alineación, balanceo, suspensión y sistema de frenos.', 4);
+
+-- feature/sistema-reservas ---------------------------------------------------
+-- Una reserva agenda un pedido YA confirmado (no es un producto con precio
+-- propio): el cliente elige qué plan comprado va a usar, en qué tipo de
+-- punto (mantenimiento = taller, lavado = lavadero), cuál punto, qué día y
+-- qué hora. Las columnas generadas slot_activo/pedido_tipo_key son la
+-- defensa real contra condiciones de carrera (dos personas reservando la
+-- misma hora, o el mismo pedido redimido dos veces para el mismo tipo de
+-- servicio): se vuelven NULL en cuanto la reserva se cancela, así el
+-- horario/beneficio queda libre para reservarse de nuevo. La verificación
+-- de disponibilidad en PHP es solo para la interfaz; el INSERT siempre
+-- puede chocar con estos índices y el código debe manejar ese error.
+
+ALTER TABLE usuarios MODIFY COLUMN rol ENUM('cliente', 'admin', 'personal') NOT NULL DEFAULT 'cliente';
+
+CREATE TABLE IF NOT EXISTS personal (
+    id_personal INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario  INT NOT NULL UNIQUE,
+    id_punto    INT NOT NULL,
+    cargo       VARCHAR(80) NOT NULL,
+    activo      TINYINT(1) NOT NULL DEFAULT 1,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_punto) REFERENCES puntos(id_punto)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS reservas (
+    id_reserva      INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido       INT NOT NULL,
+    id_usuario      INT NOT NULL,
+    id_punto        INT NOT NULL,
+    id_personal     INT NULL,
+    tipo_servicio   ENUM('mantenimiento', 'lavado') NOT NULL,
+    fecha           DATE NOT NULL,
+    hora            TIME NOT NULL,
+    estado          ENUM('confirmada', 'completada', 'cancelada') NOT NULL DEFAULT 'confirmada',
+    creado_en       DATETIME DEFAULT CURRENT_TIMESTAMP,
+    slot_activo     TIME GENERATED ALWAYS AS (IF(estado = 'cancelada', NULL, hora)) STORED,
+    pedido_tipo_key VARCHAR(30) GENERATED ALWAYS AS (IF(estado = 'cancelada', NULL, CONCAT(id_pedido, '-', tipo_servicio))) STORED,
+    FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_punto) REFERENCES puntos(id_punto),
+    FOREIGN KEY (id_personal) REFERENCES personal(id_personal),
+    UNIQUE KEY uq_punto_fecha_slot (id_punto, fecha, slot_activo),
+    UNIQUE KEY uq_pedido_tipo_activo (pedido_tipo_key),
+    INDEX idx_reservas_usuario (id_usuario)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS encuestas (
+    id_encuesta  INT AUTO_INCREMENT PRIMARY KEY,
+    id_reserva   INT NOT NULL UNIQUE,
+    calificacion TINYINT NOT NULL,
+    comentario   VARCHAR(500) NULL,
+    creado_en    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_reserva) REFERENCES reservas(id_reserva)
+) ENGINE=InnoDB;
+
+-- Personal de prueba (contraseña de desarrollo para los 4: "Personal123!").
+-- Repartidos entre talleres y lavaderos para que agendar.php sea probable de
+-- inmediato, sin depender todavía del panel de administrador (feature/panel-administrador).
+INSERT IGNORE INTO usuarios (nombre, correo, password_hash, rol) VALUES
+    ('Julián Restrepo', 'julian.personal@autolink.test', '$2y$10$4EdNE60X3iLB58V9BtPp0eyRG7LOPjd26coGsyPmVHAOKqjr3TpLi', 'personal'),
+    ('Valentina Gómez', 'valentina.personal@autolink.test', '$2y$10$4EdNE60X3iLB58V9BtPp0eyRG7LOPjd26coGsyPmVHAOKqjr3TpLi', 'personal'),
+    ('Andrés Zapata', 'andres.personal@autolink.test', '$2y$10$4EdNE60X3iLB58V9BtPp0eyRG7LOPjd26coGsyPmVHAOKqjr3TpLi', 'personal'),
+    ('Laura Montoya', 'laura.personal@autolink.test', '$2y$10$4EdNE60X3iLB58V9BtPp0eyRG7LOPjd26coGsyPmVHAOKqjr3TpLi', 'personal');
+
+INSERT IGNORE INTO personal (id_usuario, id_punto, cargo)
+SELECT u.id_usuario, p.id_punto, asignacion.cargo
+FROM usuarios u
+JOIN (
+    SELECT 'julian.personal@autolink.test' AS correo, 'Rionegro Motors' AS punto, 'Técnico mecánico' AS cargo
+    UNION ALL SELECT 'valentina.personal@autolink.test', 'MotoExpress Taller', 'Técnica de motos'
+    UNION ALL SELECT 'andres.personal@autolink.test', 'Autolavado El Progreso', 'Operario de lavado'
+    UNION ALL SELECT 'laura.personal@autolink.test', 'Lavadero La Estación', 'Operaria de lavado'
+) asignacion ON asignacion.correo = u.correo
+JOIN puntos p ON p.nombre = asignacion.punto;

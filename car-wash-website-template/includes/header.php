@@ -136,6 +136,9 @@ $usuario_actual = current_user();
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a href="panel.php" class="dropdown-item">Mi panel</a>
+                                        <?php if ($usuario_actual['rol'] === 'cliente'): ?>
+                                            <a href="agendar.php" class="dropdown-item">Agendar cita</a>
+                                        <?php endif; ?>
                                         <a href="perfil.php" class="dropdown-item">Mi perfil</a>
                                         <a href="logout.php" class="dropdown-item">Cerrar sesión</a>
                                     </div>
