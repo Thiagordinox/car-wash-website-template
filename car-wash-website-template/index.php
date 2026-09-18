@@ -266,7 +266,7 @@ include __DIR__ . '/includes/header.php';
                         </ul>
                     </div>
                     <div class="price-footer">
-                        <a class="btn btn-custom" href="#">Reservar ahora</a>
+                        <a class="btn btn-custom" href="#" id="basic-reservar">Reservar ahora</a>
                     </div>
                 </div>
             </div>
@@ -300,7 +300,7 @@ include __DIR__ . '/includes/header.php';
                         </ul>
                     </div>
                     <div class="price-footer">
-                        <a class="btn btn-custom" href="#">Reservar ahora</a>
+                        <a class="btn btn-custom" href="#" id="premium-reservar">Reservar ahora</a>
                     </div>
                 </div>
             </div>
@@ -334,7 +334,7 @@ include __DIR__ . '/includes/header.php';
                         </ul>
                     </div>
                     <div class="price-footer">
-                        <a class="btn btn-custom" href="#">Reservar ahora</a>
+                        <a class="btn btn-custom" href="#" id="full-reservar">Reservar ahora</a>
                     </div>
                 </div>
             </div>
@@ -406,6 +406,19 @@ function updatePriceOnSelect(selectId, priceId) {
     price.textContent = value;
 }
 
+// Enlazar "Reservar ahora" con el checkout real (pago.php), según el vehículo elegido
+const TIPOS_VEHICULO = ['moto', 'carro', 'camioneta', 'bus_camion'];
+function updateReservarLink(selectId, linkId, planSlug) {
+    const select = document.getElementById(selectId);
+    const link = document.getElementById(linkId);
+    function actualizar() {
+        const tipo = TIPOS_VEHICULO[select.selectedIndex] || 'carro';
+        link.href = 'pago.php?plan=' + planSlug + '&vehiculo=' + tipo;
+    }
+    select.addEventListener('change', actualizar);
+    actualizar();
+}
+
 // Inicialización
 syncVehicleSelects();
 updateWindowAndKitCleaning('basic-vehicle', 'basic-not-moto-windows', 'basic-kit-arrastre');
@@ -414,6 +427,9 @@ updateWindowAndKitCleaning('full-vehicle', 'full-not-moto-windows', 'full-kit-ar
 updatePriceOnSelect('basic-vehicle', 'basic-price');
 updatePriceOnSelect('premium-vehicle', 'premium-price');
 updatePriceOnSelect('full-vehicle', 'full-price');
+updateReservarLink('basic-vehicle', 'basic-reservar', 'basico');
+updateReservarLink('premium-vehicle', 'premium-reservar', 'premium');
+updateReservarLink('full-vehicle', 'full-reservar', 'completo');
 </script>
 <div class="location">
     <div class="container">
