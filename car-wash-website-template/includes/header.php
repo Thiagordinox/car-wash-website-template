@@ -112,14 +112,18 @@ $usuario_actual = current_user();
                             <a href="about.php" class="nav-item nav-link<?= nav_active('about', $active_page) ?>">Sobre nosotros</a>
                             <a href="service.php" class="nav-item nav-link<?= nav_active('service', $active_page) ?>">Servicios</a>
                             <a href="price.php" class="nav-item nav-link<?= nav_active('price', $active_page) ?>">Planes</a>
-                            <a href="lavaderos.php" class="nav-item nav-link<?= nav_active('lavaderos', $active_page) ?>">Puntos de lavado</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Páginas</a>
+                                <a href="#" class="nav-link dropdown-toggle<?= nav_active('talleres', $active_page) . nav_active('lavaderos', $active_page) ?>" data-toggle="dropdown">Talleres y lavaderos</a>
+                                <div class="dropdown-menu">
+                                    <a href="talleres.php" class="dropdown-item">Talleres</a>
+                                    <a href="lavaderos.php" class="dropdown-item">Puntos de lavado</a>
+                                </div>
+                            </div>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle<?= nav_active('blog', $active_page) . nav_active('single', $active_page) ?>" data-toggle="dropdown">Blog</a>
                                 <div class="dropdown-menu">
                                     <a href="blog.php" class="dropdown-item">Tips de cuidado de carros y motos</a>
-                                    <a href="single.php" class="dropdown-item">Página de detalles</a>
-                                    <a href="talleres.php" class="dropdown-item">Talleres</a>
-                                    <a href="booking.html" class="dropdown-item">Reserva de horario</a>
+                                    <a href="single.php" class="dropdown-item">Detalle de artículo</a>
                                 </div>
                             </div>
                             <a href="contact.php" class="nav-item nav-link<?= nav_active('contact', $active_page) ?>">Contacto</a>
