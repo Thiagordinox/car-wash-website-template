@@ -19,9 +19,10 @@ function current_user(): ?array
         $loaded = true;
 
         if ($user === null) {
-            // La cuenta ya no existe: cerrar la sesión huérfana.
-            session_unset();
-            session_destroy();
+            // La cuenta ya no existe: solo se limpia la referencia huérfana,
+            // sin destruir toda la sesión (eso invalidaría a mitad de la
+            // petición el token CSRF que la página está a punto de usar).
+            unset($_SESSION['user_id']);
         }
     }
 
